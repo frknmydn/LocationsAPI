@@ -13,5 +13,7 @@ namespace LocationsAPI.Model
         public decimal longitude { get; set; }
         public string carOwnerID { get; set; }
 
+        public long timestamp { get; set; }
+        
     }
 }
