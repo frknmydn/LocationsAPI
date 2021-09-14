@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,6 +41,18 @@ namespace LocationsAPI.Controllers
             return location;
         }
 
+       
+        [HttpGet("{carOwnerID}/Locations")]
+        public  IEnumerable<Location> GetLocationByUserId(string carOwnerID)
+        {
+            var locations = _context.Locations.Where(t => t.carOwnerID == carOwnerID).ToList();
+
+            return locations;
+
+        }
+       
+
+
         // PUT: api/Locations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -72,6 +84,8 @@ namespace LocationsAPI.Controllers
             return NoContent();
         }
 
+
+
         // POST: api/Locations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -97,6 +111,13 @@ namespace LocationsAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+        [HttpDelete("{postID}/Delete")]
+        public void Delete(string postID)
+        {
+            
+                _context.Locations.Remove(_context.Locations.FirstOrDefault(e => e.postID == postID));
+                _context.SaveChanges();
         }
 
         private bool LocationExists(int id)
